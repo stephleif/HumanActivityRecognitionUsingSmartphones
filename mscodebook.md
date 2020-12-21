@@ -1,4 +1,8 @@
-#mscodebook.md# ## This file describes the data in justmean.rda ##  The format of this file is ``Column Number, Column Name ``should you want to digitally process it.  This is the codebook for Mean Generated Data.  Each row of this file has the column number followed by the column name.  If the column name ends in ".test" the mean is from the "test" data set.  If the column name end in "train" the data is the mean from the "train" data set. The means are generated only on the mean and standard deviation columns of the test and train sets.  All other columns were ignored.  Information about the values of this dataset can be found in the "features_info.txt" file. The data in the justmean.rda file is the mean, with NA values removed, of a column of data from the UCI HAR dataset that represents either a mean or a standard deviation.  The justmean.rda file has a header line which names the columns with the following names:
+#mscodebook.md  #
+This file describes the data in justmean.rda   The format of this file is ``Column Number, Column Name ``should you want to digitally process it.  This is the codebook for Mean Generated Data.  Each row of this file has the column number followed by the column name.  If the column name ends in ".test" the mean is from the "test" data set.  If the column name end in "train" the data is the mean from the "train" data set. The means are generated only on the mean and standard deviation columns of the test and train sets.  All other columns were ignored.  Information about the values of this dataset can be found in the "features_info.txt" file. The data in the justmean.rda file is the mean, with NA values removed, of a column of data from the UCI HAR dataset that represents either a mean or a standard deviation.  The justmean.rda file has a header line which names the columns with the following names:
+
+----------
+
 1,mean_tBodyAcc-mean()-X.test
 2,mean_tBodyAcc-mean()-Y.test
 3,mean_tBodyAcc-mean()-Z.test
