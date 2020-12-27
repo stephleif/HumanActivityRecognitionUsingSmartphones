@@ -49,21 +49,34 @@ run_analysis <- function(datapath = "C:/Users/steph/data/",
     library(RCurl)
     library(zip)
     library(collapse)
-   
-   
-    
+
       today <- Sys.Date()
       TidyProcess <- data.table(when = today, what = character)
-      setwd(datapath)
-      
-      ## Get the raw data
+
+      ## set up to Get the raw data if needed
  
       dataURI <- 
        "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
-      ## if the file hasn't been downloaded go and get it
+      ## instructions on submission want search on current directory for UCI Har database
+      
+      if (file.exists ("getdata_projectfiles_UCI HAR Dataset.zip") ){
+        ## print("working directory")
+        ## data is in the local working directory, unzip and load it
+        TidyProcess <- rbind.data.frame(
+            Sys.Date(),"already on disk in working directory")
+        unzip("getdata_projectfiles_UCI HAR Dataset.zip")
+      } ## working directory
+      else {
+        ## print("going on passed in directory")
+        ## set the working directory for data on my machine
+        setwd(datapath)
+        
+        setwd("UCI HAR Dataset") ## This works on Windows 10; it may not on your platform
+        ## if the file hasn't been downloaded go and get it
     
-      if(!file.exists(paste(datapath,datafilename,sep="" ))){
+        if(!file.exists(paste(datapath,datafilename,sep="" ))){
+          ## print("downloading file")
           download_status <- download.file(dataURI, 
                           destfile = paste(datapath,datafilename,sep="" ),
                          method="curl")
@@ -73,16 +86,15 @@ run_analysis <- function(datapath = "C:/Users/steph/data/",
           ## Get the data from the zip file
           unzip(datafilename, exdir = datapath)
           TidyProcess <- rbind.data.frame(
-          Sys.Date(),"unzip from zip library")
+          Sys.Date(),paste("unzip from zip library from ", datapath))
         } else {
+          ## print("file already unzipped on disk")
             TidyProcess <- rbind.data.frame(
-              Sys.Date(),"already on disk")
+              Sys.Date(),paste("already on disk unzipped from", datapath))
         } ## end if .zip file already on disk
+      }## zip file in passed in directory
 
-      ## set the working directory
-      setwd(datapath)
 
-      setwd("UCI HAR Dataset") ## This works on Windows 10; it may not on your platform
     
       ## read in training set data
       xvals <- read.table("train/X_train.txt")
