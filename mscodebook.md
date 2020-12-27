@@ -1,163 +1,170 @@
-#mscodebook.md  #
-This file describes the data in justmean.rda   The format of this file is ``Column Number, Column Name ``should you want to digitally process it.  This is the codebook for Mean Generated Data.  Each row of this file has the column number followed by the column name.  If the column name ends in ".test" the mean is from the "test" data set.  If the column name end in "train" the data is the mean from the "train" data set. The means are generated only on the mean and standard deviation columns of the test and train sets.  All other columns were ignored.  Information about the values of this dataset can be found in the "features_info.txt" file. The data in the justmean.rda file is the mean, with NA values removed, of a column of data from the UCI HAR dataset that represents either a mean or a standard deviation.  The justmean.rda file has a header line which names the columns with the following names:
-
-----------
-
-1,mean_tBodyAcc-mean()-X.test
-2,mean_tBodyAcc-mean()-Y.test
-3,mean_tBodyAcc-mean()-Z.test
-4,mean_tBodyAcc-std()-X.test
-5,mean_tBodyAcc-std()-Y.test
-6,mean_tBodyAcc-std()-Z.test
-7,mean_tGravityAcc-mean()-X.test
-8,mean_tGravityAcc-mean()-Y.test
-9,mean_tGravityAcc-mean()-Z.test
-10,mean_tGravityAcc-std()-X.test
-11,mean_tGravityAcc-std()-Y.test
-12,mean_tGravityAcc-std()-Z.test
-13,mean_tBodyAccJerk-mean()-X.test
-14,mean_tBodyAccJerk-mean()-Y.test
-15,mean_tBodyAccJerk-mean()-Z.test
-16,mean_tBodyAccJerk-std()-X.test
-17,mean_tBodyAccJerk-std()-Y.test
-18,mean_tBodyAccJerk-std()-Z.test
-19,mean_tBodyGyro-mean()-X.test
-20,mean_tBodyGyro-mean()-Y.test
-21,mean_tBodyGyro-mean()-Z.test
-22,mean_tBodyGyro-std()-X.test
-23,mean_tBodyGyro-std()-Y.test
-24,mean_tBodyGyro-std()-Z.test
-25,mean_tBodyGyroJerk-mean()-X.test
-26,mean_tBodyGyroJerk-mean()-Y.test
-27,mean_tBodyGyroJerk-mean()-Z.test
-28,mean_tBodyGyroJerk-std()-X.test
-29,mean_tBodyGyroJerk-std()-Y.test
-30,mean_tBodyGyroJerk-std()-Z.test
-31,mean_tBodyAccMag-mean().test
-32,mean_tBodyAccMag-std().test
-33,mean_tGravityAccMag-mean().test
-34,mean_tGravityAccMag-std().test
-35,mean_tBodyAccJerkMag-mean().test
-36,mean_tBodyAccJerkMag-std().test
-37,mean_tBodyGyroMag-mean().test
-38,mean_tBodyGyroMag-std().test
-39,mean_tBodyGyroJerkMag-mean().test
-40,mean_tBodyGyroJerkMag-std().test
-41,mean_fBodyAcc-mean()-X.test
-42,mean_fBodyAcc-mean()-Y.test
-43,mean_fBodyAcc-mean()-Z.test
-44,mean_fBodyAcc-std()-X.test
-45,mean_fBodyAcc-std()-Y.test
-46,mean_fBodyAcc-std()-Z.test
-47,mean_fBodyAcc-meanFreq()-X.test
-48,mean_fBodyAcc-meanFreq()-Y.test
-49,mean_fBodyAcc-meanFreq()-Z.test
-50,mean_fBodyAccJerk-mean()-X.test
-51,mean_fBodyAccJerk-mean()-Y.test
-52,mean_fBodyAccJerk-mean()-Z.test
-53,mean_fBodyAccJerk-std()-X.test
-54,mean_fBodyAccJerk-std()-Y.test
-55,mean_fBodyAccJerk-std()-Z.test
-56,mean_fBodyAccJerk-meanFreq()-X.test
-57,mean_fBodyAccJerk-meanFreq()-Y.test
-58,mean_fBodyAccJerk-meanFreq()-Z.test
-59,mean_fBodyGyro-mean()-X.test
-60,mean_fBodyGyro-mean()-Y.test
-61,mean_fBodyGyro-mean()-Z.test
-62,mean_fBodyGyro-std()-X.test
-63,mean_fBodyGyro-std()-Y.test
-64,mean_fBodyGyro-std()-Z.test
-65,mean_fBodyGyro-meanFreq()-X.test
-66,mean_fBodyGyro-meanFreq()-Y.test
-67,mean_fBodyGyro-meanFreq()-Z.test
-68,mean_fBodyAccMag-mean().test
-69,mean_fBodyAccMag-std().test
-70,mean_fBodyAccMag-meanFreq().test
-71,mean_fBodyBodyAccJerkMag-mean().test
-72,mean_fBodyBodyAccJerkMag-std().test
-73,mean_fBodyBodyAccJerkMag-meanFreq().test
-74,mean_fBodyBodyGyroMag-mean().test
-75,mean_fBodyBodyGyroMag-std().test
-76,mean_fBodyBodyGyroMag-meanFreq().test
-77,mean_fBodyBodyGyroJerkMag-mean().test
-78,mean_fBodyBodyGyroJerkMag-std().test
-79,mean_fBodyBodyGyroJerkMag-meanFreq().test
-80,mean_tBodyAcc-mean()-X.train
-81,mean_tBodyAcc-mean()-Y.train
-82,mean_tBodyAcc-mean()-Z.train
-83,mean_tBodyAcc-std()-X.train
-84,mean_tBodyAcc-std()-Y.train
-85,mean_tBodyAcc-std()-Z.train
-86,mean_tGravityAcc-mean()-X.train
-87,mean_tGravityAcc-mean()-Y.train
-88,mean_tGravityAcc-mean()-Z.train
-89,mean_tGravityAcc-std()-X.train
-90,mean_tGravityAcc-std()-Y.train
-91,mean_tGravityAcc-std()-Z.train
-92,mean_tBodyAccJerk-mean()-X.train
-93,mean_tBodyAccJerk-mean()-Y.train
-94,mean_tBodyAccJerk-mean()-Z.train
-95,mean_tBodyAccJerk-std()-X.train
-96,mean_tBodyAccJerk-std()-Y.train
-97,mean_tBodyAccJerk-std()-Z.train
-98,mean_tBodyGyro-mean()-X.train
-99,mean_tBodyGyro-mean()-Y.train
-100,mean_tBodyGyro-mean()-Z.train
-101,mean_tBodyGyro-std()-X.train
-102,mean_tBodyGyro-std()-Y.train
-103,mean_tBodyGyro-std()-Z.train
-104,mean_tBodyGyroJerk-mean()-X.train
-105,mean_tBodyGyroJerk-mean()-Y.train
-106,mean_tBodyGyroJerk-mean()-Z.train
-107,mean_tBodyGyroJerk-std()-X.train
-108,mean_tBodyGyroJerk-std()-Y.train
-109,mean_tBodyGyroJerk-std()-Z.train
-110,mean_tBodyAccMag-mean().train
-111,mean_tBodyAccMag-std().train
-112,mean_tGravityAccMag-mean().train
-113,mean_tGravityAccMag-std().train
-114,mean_tBodyAccJerkMag-mean().train
-115,mean_tBodyAccJerkMag-std().train
-116,mean_tBodyGyroMag-mean().train
-117,mean_tBodyGyroMag-std().train
-118,mean_tBodyGyroJerkMag-mean().train
-119,mean_tBodyGyroJerkMag-std().train
-120,mean_fBodyAcc-mean()-X.train
-121,mean_fBodyAcc-mean()-Y.train
-122,mean_fBodyAcc-mean()-Z.train
-123,mean_fBodyAcc-std()-X.train
-124,mean_fBodyAcc-std()-Y.train
-125,mean_fBodyAcc-std()-Z.train
-126,mean_fBodyAcc-meanFreq()-X.train
-127,mean_fBodyAcc-meanFreq()-Y.train
-128,mean_fBodyAcc-meanFreq()-Z.train
-129,mean_fBodyAccJerk-mean()-X.train
-130,mean_fBodyAccJerk-mean()-Y.train
-131,mean_fBodyAccJerk-mean()-Z.train
-132,mean_fBodyAccJerk-std()-X.train
-133,mean_fBodyAccJerk-std()-Y.train
-134,mean_fBodyAccJerk-std()-Z.train
-135,mean_fBodyAccJerk-meanFreq()-X.train
-136,mean_fBodyAccJerk-meanFreq()-Y.train
-137,mean_fBodyAccJerk-meanFreq()-Z.train
-138,mean_fBodyGyro-mean()-X.train
-139,mean_fBodyGyro-mean()-Y.train
-140,mean_fBodyGyro-mean()-Z.train
-141,mean_fBodyGyro-std()-X.train
-142,mean_fBodyGyro-std()-Y.train
-143,mean_fBodyGyro-std()-Z.train
-144,mean_fBodyGyro-meanFreq()-X.train
-145,mean_fBodyGyro-meanFreq()-Y.train
-146,mean_fBodyGyro-meanFreq()-Z.train
-147,mean_fBodyAccMag-mean().train
-148,mean_fBodyAccMag-std().train
-149,mean_fBodyAccMag-meanFreq().train
-150,mean_fBodyBodyAccJerkMag-mean().train
-151,mean_fBodyBodyAccJerkMag-std().train
-152,mean_fBodyBodyAccJerkMag-meanFreq().train
-153,mean_fBodyBodyGyroMag-mean().train
-154,mean_fBodyBodyGyroMag-std().train
-155,mean_fBodyBodyGyroMag-meanFreq().train
-156,mean_fBodyBodyGyroJerkMag-mean().train
-157,mean_fBodyBodyGyroJerkMag-std().train
-158,mean_fBodyBodyGyroJerkMag-meanFreq().train
+This file describes the data in justmean.rda   The format of this file is
+Column Number. Column Name should you want to digitally process it.  This is the codebook
+for Mean Generated Data.  Each row of this file has the column number followed by the column name. 
+If the column name ends in .test the mean is from the test data set.  If the column name end in 
+train  the data is the mean from the train data set. The means are generated only on the mean and 
+standard deviation columns of the test and train sets.  All other columns were ignored.  Information 
+about the values of this dataset can be found in the features_info.txt file. The data in the 
+justmean.rda file is the mean, with NA values removed, of a column of data from the UCI HAR dataset 
+that represents either a mean or a standard deviation.  The justmean.rda file has a header line which 
+names the columns with the following names:
+___
+
+1. mean_tBodyAcc-mean()-X.test
+2. mean_tBodyAcc-mean()-Y.test
+3. mean_tBodyAcc-mean()-Z.test
+4. mean_tBodyAcc-std()-X.test
+5. mean_tBodyAcc-std()-Y.test
+6. mean_tBodyAcc-std()-Z.test
+7. mean_tGravityAcc-mean()-X.test
+8. mean_tGravityAcc-mean()-Y.test
+9. mean_tGravityAcc-mean()-Z.test
+10. mean_tGravityAcc-std()-X.test
+11. mean_tGravityAcc-std()-Y.test
+12. mean_tGravityAcc-std()-Z.test
+13. mean_tBodyAccJerk-mean()-X.test
+14. mean_tBodyAccJerk-mean()-Y.test
+15. mean_tBodyAccJerk-mean()-Z.test
+16. mean_tBodyAccJerk-std()-X.test
+17. mean_tBodyAccJerk-std()-Y.test
+18. mean_tBodyAccJerk-std()-Z.test
+19. mean_tBodyGyro-mean()-X.test
+20. mean_tBodyGyro-mean()-Y.test
+21. mean_tBodyGyro-mean()-Z.test
+22. mean_tBodyGyro-std()-X.test
+23. mean_tBodyGyro-std()-Y.test
+24. mean_tBodyGyro-std()-Z.test
+25. mean_tBodyGyroJerk-mean()-X.test
+26. mean_tBodyGyroJerk-mean()-Y.test
+27. mean_tBodyGyroJerk-mean()-Z.test
+28. mean_tBodyGyroJerk-std()-X.test
+29. mean_tBodyGyroJerk-std()-Y.test
+30. mean_tBodyGyroJerk-std()-Z.test
+31. mean_tBodyAccMag-mean().test
+32. mean_tBodyAccMag-std().test
+33. mean_tGravityAccMag-mean().test
+34. mean_tGravityAccMag-std().test
+35. mean_tBodyAccJerkMag-mean().test
+36. mean_tBodyAccJerkMag-std().test
+37. mean_tBodyGyroMag-mean().test
+38. mean_tBodyGyroMag-std().test
+39. mean_tBodyGyroJerkMag-mean().test
+40. mean_tBodyGyroJerkMag-std().test
+41. mean_fBodyAcc-mean()-X.test
+42. mean_fBodyAcc-mean()-Y.test
+43. mean_fBodyAcc-mean()-Z.test
+44. mean_fBodyAcc-std()-X.test
+45. mean_fBodyAcc-std()-Y.test
+46. mean_fBodyAcc-std()-Z.test
+47. mean_fBodyAcc-meanFreq()-X.test
+48. mean_fBodyAcc-meanFreq()-Y.test
+49. mean_fBodyAcc-meanFreq()-Z.test
+50. mean_fBodyAccJerk-mean()-X.test
+51. mean_fBodyAccJerk-mean()-Y.test
+52. mean_fBodyAccJerk-mean()-Z.test
+53. mean_fBodyAccJerk-std()-X.test
+54. mean_fBodyAccJerk-std()-Y.test
+55. mean_fBodyAccJerk-std()-Z.test
+56. mean_fBodyAccJerk-meanFreq()-X.test
+57. mean_fBodyAccJerk-meanFreq()-Y.test
+58. mean_fBodyAccJerk-meanFreq()-Z.test
+59. mean_fBodyGyro-mean()-X.test
+60. mean_fBodyGyro-mean()-Y.test
+61. mean_fBodyGyro-mean()-Z.test
+62. mean_fBodyGyro-std()-X.test
+63. mean_fBodyGyro-std()-Y.test
+64. mean_fBodyGyro-std()-Z.test
+65. mean_fBodyGyro-meanFreq()-X.test
+66. mean_fBodyGyro-meanFreq()-Y.test
+67. mean_fBodyGyro-meanFreq()-Z.test
+68. mean_fBodyAccMag-mean().test
+69. mean_fBodyAccMag-std().test
+70. mean_fBodyAccMag-meanFreq().test
+71. mean_fBodyBodyAccJerkMag-mean().test
+72. mean_fBodyBodyAccJerkMag-std().test
+73. mean_fBodyBodyAccJerkMag-meanFreq().test
+74. mean_fBodyBodyGyroMag-mean().test
+75. mean_fBodyBodyGyroMag-std().test
+76. mean_fBodyBodyGyroMag-meanFreq().test
+77. mean_fBodyBodyGyroJerkMag-mean().test
+78. mean_fBodyBodyGyroJerkMag-std().test
+79. mean_fBodyBodyGyroJerkMag-meanFreq().test
+80. mean_tBodyAcc-mean()-X.train
+81. mean_tBodyAcc-mean()-Y.train
+82. mean_tBodyAcc-mean()-Z.train
+83. mean_tBodyAcc-std()-X.train
+84. mean_tBodyAcc-std()-Y.train
+85. mean_tBodyAcc-std()-Z.train
+86. mean_tGravityAcc-mean()-X.train
+87. mean_tGravityAcc-mean()-Y.train
+88. mean_tGravityAcc-mean()-Z.train
+89. mean_tGravityAcc-std()-X.train
+90. mean_tGravityAcc-std()-Y.train
+91. mean_tGravityAcc-std()-Z.train
+92. mean_tBodyAccJerk-mean()-X.train
+93. mean_tBodyAccJerk-mean()-Y.train
+94. mean_tBodyAccJerk-mean()-Z.train
+95. mean_tBodyAccJerk-std()-X.train
+96. mean_tBodyAccJerk-std()-Y.train
+97. mean_tBodyAccJerk-std()-Z.train
+98. mean_tBodyGyro-mean()-X.train
+99. mean_tBodyGyro-mean()-Y.train
+100. mean_tBodyGyro-mean()-Z.train
+101. mean_tBodyGyro-std()-X.train
+102. mean_tBodyGyro-std()-Y.train
+103. mean_tBodyGyro-std()-Z.train
+104. mean_tBodyGyroJerk-mean()-X.train
+105. mean_tBodyGyroJerk-mean()-Y.train
+106. mean_tBodyGyroJerk-mean()-Z.train
+107. mean_tBodyGyroJerk-std()-X.train
+108. mean_tBodyGyroJerk-std()-Y.train
+109. mean_tBodyGyroJerk-std()-Z.train
+110. mean_tBodyAccMag-mean().train
+111. mean_tBodyAccMag-std().train
+112. mean_tGravityAccMag-mean().train
+113. mean_tGravityAccMag-std().train
+114. mean_tBodyAccJerkMag-mean().train
+115. mean_tBodyAccJerkMag-std().train
+116. mean_tBodyGyroMag-mean().train
+117. mean_tBodyGyroMag-std().train
+118. mean_tBodyGyroJerkMag-mean().train
+119. mean_tBodyGyroJerkMag-std().train
+120. mean_fBodyAcc-mean()-X.train
+121. mean_fBodyAcc-mean()-Y.train
+122. mean_fBodyAcc-mean()-Z.train
+123. mean_fBodyAcc-std()-X.train
+124. mean_fBodyAcc-std()-Y.train
+125. mean_fBodyAcc-std()-Z.train
+126. mean_fBodyAcc-meanFreq()-X.train
+127. mean_fBodyAcc-meanFreq()-Y.train
+128. mean_fBodyAcc-meanFreq()-Z.train
+129. mean_fBodyAccJerk-mean()-X.train
+130. mean_fBodyAccJerk-mean()-Y.train
+131. mean_fBodyAccJerk-mean()-Z.train
+132. mean_fBodyAccJerk-std()-X.train
+133. mean_fBodyAccJerk-std()-Y.train
+134. mean_fBodyAccJerk-std()-Z.train
+135. mean_fBodyAccJerk-meanFreq()-X.train
+136. mean_fBodyAccJerk-meanFreq()-Y.train
+137. mean_fBodyAccJerk-meanFreq()-Z.train
+138. mean_fBodyGyro-mean()-X.train
+139. mean_fBodyGyro-mean()-Y.train
+140. mean_fBodyGyro-mean()-Z.train
+141. mean_fBodyGyro-std()-X.train
+142. mean_fBodyGyro-std()-Y.train
+143. mean_fBodyGyro-std()-Z.train
+144. mean_fBodyGyro-meanFreq()-X.train
+145. mean_fBodyGyro-meanFreq()-Y.train
+146. mean_fBodyGyro-meanFreq()-Z.train
+147. mean_fBodyAccMag-mean().train
+148. mean_fBodyAccMag-std().train
+149. mean_fBodyAccMag-meanFreq().train
+150. mean_fBodyBodyAccJerkMag-mean().train
+151. mean_fBodyBodyAccJerkMag-std().train
+152. mean_fBodyBodyAccJerkMag-meanFreq().train
+153. mean_fBodyBodyGyroMag-mean().train
+154. mean_fBodyBodyGyroMag-std().train
+155. mean_fBodyBodyGyroMag-meanFreq().train
+156. mean_fBodyBodyGyroJerkMag-mean().train
+157. mean_fBodyBodyGyroJerkMag-std().train
+158. mean_fBodyBodyGyroJerkMag-meanFreq().train
