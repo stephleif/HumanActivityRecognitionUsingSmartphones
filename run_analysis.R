@@ -219,7 +219,7 @@ run_analysis <- function(datapath = "C:/Users/steph/data/",
     zipname <- "run_analysis_results.zip"
     zip(
       zipfile = zipname,
-      files = c("justmean.rda","tidyprocess.rda", "trainandtest.rda"),
+      files = c("justmean.rda","tidyprocess.rda"), ## train and test is too big to upload to github
       include_directories = FALSE,
       root = ".",
       mode =  "cherry-pick"
