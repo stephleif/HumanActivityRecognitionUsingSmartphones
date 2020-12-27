@@ -153,11 +153,10 @@ run_analysis <- function(datapath = "C:/Users/steph/data/",
       ## codebook.md
       TrainandTestCodeBook <- data.table(columnTitle = colnames(trainAndtest))
 
-      ## Actual CodeBook needs to have 3 columns, 1  = colnames and 2 = description 3= units/where
-      ## number came from
-      ## CodeBook written out as csv file so as to be easy to be editted by hand
-      write.csv(TrainandTestCodeBook,"trainandtestcodebook.csv", 
-                quote = FALSE)
+      ## CodeBook written out as csv file so as to be easy to be edited by hand
+      write.table(TrainandTestCodeBook, file = "trainandtestcodebook.csv", 
+                  col.names = FALSE, row.names = TRUE, sep = ". ",
+                  quote = FALSE)
       
     
       ## the following code was to test that tidy data was accomplished
