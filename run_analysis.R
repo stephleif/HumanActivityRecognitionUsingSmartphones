@@ -37,7 +37,9 @@
 ## steps made to get the tidy data.  The name of this table is
 ## TidyProcess
 
-run_analysis <- function(datapath = "C:/Users/steph/data/", datafilename="analysis.zip"){
+run_analysis <- function(datapath = "C:/Users/steph/data/", 
+                         datafilename="analysis.zip",
+                         review = FALSE){
     library(data.table)
     library(tidyverse) 
     library(tidyr)
@@ -47,138 +49,198 @@ run_analysis <- function(datapath = "C:/Users/steph/data/", datafilename="analys
     library(RCurl)
     library(zip)
     library(collapse)
+   
+   
     
-    
-    isaMeanorStd <- function(aname){
-      ## grep returns place pattern starts, so val > 0 means pattern was found
-        ifelse(test = grepl(pattern = "*mean*|*std*", x = aname), 
-               yes = return(TRUE),
-               no = return(FALSE))
-    }## end isaMeanorStd     
-
-    
-## Get the raw data
+      today <- Sys.Date()
+      TidyProcess <- data.table(when = today, what = character)
+      setwd(datapath)
+      
+      ## Get the raw data
  
-    dataURI <- 
+      dataURI <- 
        "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
-    download_status <-1
-    ##download_status <- download.file(dataURI, 
-    ##                      destfile = paste(datapath,datafilename,sep="" ),
-    ##                      method="curl")
+      ## if the file hasn't been downloaded go and get it
     
-    today <- Sys.Date()
-    
-    TidyProcess <- data.table(when = today, what = character)
-    
-    TidyProcess <- rbind.data.frame(
-        Sys.Date(),paste(dataURI,as.character(download_status)))
-    ## note that download_status ==0 is success
-    
-    ## Get the data from the zip file
-    ## set the working directory
-    setwd(datapath)
-    ##unzip(datafilename, exdir = datapath)
-    TidyProcess <- rbind.data.frame(
-      Sys.Date(),"unzip from zip library")
+      if(!file.exists(paste(datapath,datafilename,sep="" ))){
+          download_status <- download.file(dataURI, 
+                          destfile = paste(datapath,datafilename,sep="" ),
+                         method="curl")
+          TidyProcess <- rbind.data.frame(
+            Sys.Date(),paste(dataURI,as.character(download_status)))
+          ## note that download_status ==0 is success
+          ## Get the data from the zip file
+          unzip(datafilename, exdir = datapath)
+          TidyProcess <- rbind.data.frame(
+          Sys.Date(),"unzip from zip library")
+        } else {
+            TidyProcess <- rbind.data.frame(
+              Sys.Date(),"already on disk")
+        } ## end if .zip file already on disk
 
-    setwd("UCI HAR Dataset") ## This works on Windows 10; it may not on your platform
-    
-    
-    ## read in training set data
-    xvals <- read.table("train/X_train.txt")
-    yvals <- read.table("train/Y_train.txt")
-    features <- read.table('features.txt')
-    subject <- read.table("train/subject_train.txt")
+      ## set the working directory
+      setwd(datapath)
 
-    colnames(xvals) <- features[,2]
+      setwd("UCI HAR Dataset") ## This works on Windows 10; it may not on your platform
+    
+      ## read in training set data
+      xvals <- read.table("train/X_train.txt")
+      yvals <- read.table("train/Y_train.txt")
+      features <- read.table('features.txt')
+      subject <- read.table("train/subject_train.txt")
 
-    activityfactor <- factor(c("walk",
+      colnames(xvals) <- features[,2]
+
+      activityfactor <- factor(c("walk",
                         "walkup",
                         "walkdown",
                         "sitting",
                         "standing",
                         "laying"))
     
-    convertTofactor <- function (aNumber){
-      return(activityfactor[aNumber])
-    }
-    colnames(yvals) <- "activityNumber"
+      convertTofactor <- function (aNumber){
+        return(activityfactor[aNumber])
+      }
+      
+      colnames(yvals) <- "activityNumber"
     
-    ## change activties from number to descriptive factor
+      ## change activities from number to descriptive factor
 
-    yvals <- yvals %>% mutate(activity = convertTofactor(activityNumber),
+      yvals <- yvals %>% mutate(activity = convertTofactor(activityNumber),
                               .keep = "none")
 
+      trainingOrTesting <- factor(c("train","test"))
+      xvals$subject <- subject[,1]
+      xvals$activity <- yvals$activity
+      ## every data point so far is from training
+      xvals["datafrom"]="train"
 
+      ## read in testing set data.  same process as training
+      xtestvals <- read.table("test/X_test.txt")
+      ytestvals <- read.table("test/Y_test.txt")
+      testfeatures <- read.table('features.txt')
+      testsubject <- read.table("test/subject_test.txt")
     
-    trainingOrTesting <- factor(c("train","test"))
-    xvals$subject <- subject[,1]
-    xvals$activity <- yvals$activity
-    ## every data point so far is from training
-    xvals["datafrom"]="train"
-
-
-    ## read in testing set data.  same process as training
-    xtestvals <- read.table("test/X_test.txt")
-    ytestvals <- read.table("test/Y_test.txt")
-    testfeatures <- read.table('features.txt')
-    testsubject <- read.table("test/subject_test.txt")
-    
-    colnames(xtestvals) <- features[,2]
-    colnames(ytestvals) <- "activityNumber"
-    ytestvals <- ytestvals %>% mutate(activity = convertTofactor(activityNumber),
+      colnames(xtestvals) <- features[,2]
+      colnames(ytestvals) <- "activityNumber"
+      ytestvals <- ytestvals %>% mutate(activity = convertTofactor(activityNumber),
                                           .keep = "none")
     
-    xtestvals$subject <- testsubject[,1]
-    xtestvals$test_activity <- ytestvals$testactivity
-    ## want to make sure can distinguish 
-    ## after merge between when activity was done in training or testing
-    xtestvals["datafrom"]="test"
+      xtestvals$subject <- testsubject[,1]
+      xtestvals$test_activity <- ytestvals$testactivity
+      ## want to make sure can distinguish 
+      ## after merge between when activity was done in training or testing
+      xtestvals["datafrom"]="test"
 
     
-    ## join test and train
-    trainAndtest <- full_join(xtestvals,xvals, by = "subject")
-    ## full_join because want all rows in both training and testing data sets
+      ## join test and train
+      trainAndtest <- full_join(xtestvals,xvals, by = "subject",
+                                suffix = c(".test", ".train")) %>% ## remove rows that are all na
+                      
+                      subset(!is.na(subject) &
+                               !is.na(activity) &
+                               (!is.na(datafrom.train) | ## must have a subject and train or test
+                               !is.na(datafrom.test)))
+      ## full_join because want all rows in both training and testing data sets
+      
+      ## create a code book
+      ## modifies and updates the available codebooks with the data to indicate all 
+      ## the variables and summaries calculated, along with units, and any other relevant 
+      ## information
+      ## The code book checked into github is a .md (githup markdown) file
+      ## this table here is just to help generate the data that is used in the actual
+      ## codebook.md
+      TrainandTestCodeBook <- data.table(columnTitle = colnames(trainAndtest))
+
+      ## Actual CodeBook needs to have 3 columns, 1  = colnames and 2 = description 3= units/where
+      ## number came from
+      ## CodeBook written out as csv file so as to be easy to be editted by hand
+      write.csv(TrainandTestCodeBook,"trainandtestcodebook.csv", 
+                quote = FALSE)
+      
     
-    ## the following code was to test that tidy data was accomplished
-    ## print(summary(trainAndtest))
-    ## print(str(trainAndtest))
+      ## the following code was to test that tidy data was accomplished
+      ## print(summary(trainAndtest))
+      ## print(str(trainAndtest))
     
     
-    ## Save the original data in the new format with training and testing merged
+      ## Save the original data in the new format with training and testing merged
    
-    save(trainAndtest,file="trainandtest.rda")
+      saveRDS(trainAndtest,file="trainandtest.rda")
     
-    ## Step 2:
-    ## Extracts only the measurements on the mean and standard deviation 
-    ## for each measurement
+      ## Step 2:
+      ## Extracts only the measurements on the mean and standard deviation 
+      ## for each measurement
     
-    ## columns which have mean have "mean" in them
-    ## columns which have std deviation have "std" in them
+          ## columns which have mean have "mean" in them
+          ## columns which have std deviation have "std" in them
 
     
-    ## make a new table that just has the mean of each of the stdmeanCols
-    ## with the new column name being mean_old column name
-    
-    thisHasData <- function(theColumn){
-      return(length(na.omit(theColumn) > 0))
-    }
-    
-    myMean <- function(theData){
-      return(mean(theData, na.rm = TRUE))
-    }
-    
-    tralala <- trainAndtest %>% 
-      summarise(across(matches("*mean*|*std*"), fmean, .names = "mean_{.col}"))
-    View(tralala,"maybe")
-    return(0)
-}
-    
+      ## make a new table that just has the mean of each of the stdmeanCols
+      ## with the new column name being mean_old column name
 
+      justmean <- trainAndtest %>% 
+        summarise(across(matches("*-mean*|*-std*"), fmean, .names = "mean_{.col}"))
+      saveRDS(justmean,file="justmean.rda")
+    
+      ## does save and read work right on your operating system?
+      ## note that load does not work on windows because object names must be the same
+      ##-    really <- readRDS(file = "justmean.rda")
+      ##-    if (!identical(justmean,really)){
+      ##-        stop("readRDS of saveRDS not identical.  Data is corrupted.")
+      ##-    } ## if not identical
+
+    
+    ## codebook for mean and std
+
+    write_lines("This file describes the data in justmean.rda   The format of this file is","mscodebook.md")
+    write_lines("Column Number. Column Name should you want to digitally process it.  This is the codebook","mscodebook.md")
+    write_lines("for Mean Generated Data.  Each row of this file has the column number followed by the column name. ","mscodebook.md")
+    write_lines("If the column name ends in .test the mean is from the test data set.  If the column name end in ","mscodebook.md")
+    write_lines("train  the data is the mean from the train data set. The means are generated only on the mean and ","mscodebook.md")
+    write_lines("standard deviation columns of the test and train sets.  All other columns were ignored.  Information ","mscodebook.md")
+    write_lines("about the values of this dataset can be found in the features_info.txt file. The data in the ","mscodebook.md")
+    write_lines("justmean.rda file is the mean, with NA values removed, of a column of data from the UCI HAR dataset " ,"mscodebook.md")
+    write_lines("that represents either a mean or a standard deviation.  The justmean.rda file has a header line which ","mscodebook.md")
+    write_lines("names the columns with the following names:","mscodebook.md")
+    write_lines("","mscodebook.md")
+    write_lines("___", "mscodebook.md") ## write a horizontal line in the output
+    write_lines("","mscodebook.md")
+    theColnames <- colnames(justmean)
+    for (i in 1:length(theColnames)){
+      write_lines(paste(i,". ", theColnames[i], sep = ""),"mscodebook.md")
+    }
+
+    ## write out the TidyProcess data
+    saveRDS(TidyProcess,file="tidyprocess.rda")
+    
+    ## make the files into a zip file
+    zipname <- "run_analysis_results.zip"
+    zip(
+      zipfile = zipname,
+      files = c("justmean.rda","tidyprocess.rda", "trainandtest.rda"),
+      include_directories = FALSE,
+      root = ".",
+      mode =  "cherry-pick"
+    )
 
 ## To Review the tidy data please do the following
 ## setting file_uri to what is appropriate for your system
-## I have set it here to the github of the files I generated
-##data <- read.table(file_uri, header = TRUE) 
-##View(data)
+## I have set it here the name of the zip file I generated, but you will need to fix the path.
+
+    if (review==TRUE){
+      all_files <- zip_list(zipname)
+ 
+                ## data frame with columns: 
+                ## filename, ...
+
+      unzip(zipname)
+      ## check that save and then load files correctly preserved data
+        for (i in 1:nrow(all_files)){
+          print(all_files[i,"filename"])
+          data <- readRDS(all_files[i,"filename"])
+          View(data)
+      } ## end for all the files
+    }
+}## end run_analysis.R
