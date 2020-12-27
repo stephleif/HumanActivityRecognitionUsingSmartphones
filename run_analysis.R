@@ -193,24 +193,30 @@ run_analysis <- function(datapath = "C:/Users/steph/data/",
 
     
     ## codebook for mean and std
-
-    write_lines("This file describes the data in justmean.rda   The format of this file is","mscodebook.md")
-    write_lines("Column Number. Column Name should you want to digitally process it.  This is the codebook","mscodebook.md")
-    write_lines("for Mean Generated Data.  Each row of this file has the column number followed by the column name. ","mscodebook.md")
-    write_lines("If the column name ends in .test the mean is from the test data set.  If the column name end in ","mscodebook.md")
-    write_lines("train  the data is the mean from the train data set. The means are generated only on the mean and ","mscodebook.md")
-    write_lines("standard deviation columns of the test and train sets.  All other columns were ignored.  Information ","mscodebook.md")
-    write_lines("about the values of this dataset can be found in the features_info.txt file. The data in the ","mscodebook.md")
-    write_lines("justmean.rda file is the mean, with NA values removed, of a column of data from the UCI HAR dataset " ,"mscodebook.md")
-    write_lines("that represents either a mean or a standard deviation.  The justmean.rda file has a header line which ","mscodebook.md")
-    write_lines("names the columns with the following names:","mscodebook.md")
-    write_lines("","mscodebook.md")
-    write_lines("___", "mscodebook.md") ## write a horizontal line in the output
-    write_lines("","mscodebook.md")
+    codebook <- c(
+    "This file describes the data in justmean.rda   The format of this file is", 
+    "Column Number. Column Name should you want to digitally process it.  This is the codebook", 
+    "for Mean Generated Data.  Each row of this file has the column number followed by the column name. ",
+    "If the column name ends in .test the mean is from the test data set.  If the column name end in ",
+    ".train  the data is the mean from the train data set. The means are generated only on the mean and ", 
+    "standard deviation columns of the test and train sets.  All other columns were ignored.  Information ", 
+    "about the values of this dataset can be found in the features_info.txt file. The data in the ",
+    "justmean.rda file is the mean, with NA values removed, of a column of data from the UCI HAR dataset " ,
+    "that represents either a mean or a standard deviation.",
+    "The name of the original column has been preserved after mean_",
+    "The justmean.rda file has a header line which ",
+    "names the columns with the following names:",
+    
+    "___",  ## write a horizontal line in the output
+    "\r")
     theColnames <- colnames(justmean)
     for (i in 1:length(theColnames)){
-      write_lines(paste(i,". ", theColnames[i], sep = ""),"mscodebook.md")
+      codebook <- c(codebook,paste(i,". ", theColnames[i], sep = ""))
     }
+    write.table(codebook, file = "mscodebook", 
+                col.names = FALSE, row.names = FALSE, 
+                quote = FALSE)
+ 
 
     ## write out the TidyProcess data
     saveRDS(TidyProcess,file="tidyprocess.rda")
