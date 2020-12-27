@@ -182,6 +182,11 @@ run_analysis <- function(datapath = "C:/Users/steph/data/",
       justmean <- trainAndtest %>% 
         summarise(across(matches("*-mean*|*-std*"), fmean, .names = "mean_{.col}"))
       saveRDS(justmean,file="justmean.rda")
+      
+      ## instruction want justmean data set uploaded as
+      ## write.table() using row.name=FALSE
+      
+      write.table(justmean, file = "justmean.csv", row.name=FALSE)
     
       ## does save and read work right on your operating system?
       ## note that load does not work on windows because object names must be the same
